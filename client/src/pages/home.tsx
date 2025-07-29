@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,15 @@ import type { TrackingWithEvents } from "@shared/schema";
 export default function Home() {
   const [searchedTrackingNumber, setSearchedTrackingNumber] = useState<string>("");
 
+  // Check URL for tracking parameter on mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackParam = urlParams.get('track');
+    if (trackParam) {
+      setSearchedTrackingNumber(trackParam);
+    }
+  }, []);
+
   // Fetch tracking data when a tracking number is searched
   const { data: trackingData, isLoading, error, refetch } = useQuery<TrackingWithEvents>({
     queryKey: ["/api/tracking", searchedTrackingNumber],
@@ -19,6 +28,9 @@ export default function Home() {
 
   const handleTrack = (trackingNumber: string) => {
     setSearchedTrackingNumber(trackingNumber);
+    // Update URL without page reload
+    const newUrl = trackingNumber ? `/?track=${trackingNumber}` : '/';
+    window.history.pushState({}, '', newUrl);
     refetch();
   };
 

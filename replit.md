@@ -47,9 +47,17 @@ Preferred communication style: Simple, everyday language.
 - `POST /api/admin/tracking/:id/events` - Add tracking events
 
 ### Frontend Pages
-- **Home**: Customer tracking interface with search and results
-- **Admin**: Dashboard with package management and statistics
-- **Components**: Reusable UI components for forms, tables, and displays
+- **Home**: Customer tracking interface with search and results, supports URL parameters
+- **Admin**: Full-featured dashboard with complete package management
+- **Components**: Comprehensive UI components for forms, tables, modals, and displays
+
+### Admin Panel Features
+- **Create Tracking Numbers**: Generate new packages with custom details
+- **Edit Tracking Numbers**: Full editing of package information and status
+- **Manage Tracking Events**: Add, view, and control tracking timeline
+- **Delete Packages**: Remove tracking numbers with confirmation
+- **Search & Filter**: Find packages by tracking number or customer name
+- **Real-time Statistics**: Dashboard metrics for package counts and status
 
 ### Authentication & Authorization
 - Currently no authentication implemented

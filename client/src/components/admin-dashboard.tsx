@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,11 +7,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Download, Settings, Edit, Eye, Trash2, Package, Truck, CheckCircle } from "lucide-react";
 import { getStatusColor } from "@/lib/tracking";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import type { TrackingNumber } from "@shared/schema";
 import CreateTrackingModal from "./create-tracking-modal";
+import EditTrackingModal from "./edit-tracking-modal";
 
 export default function AdminDashboard() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingTrackingId, setEditingTrackingId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -32,6 +39,44 @@ export default function AdminDashboard() {
     const matchesStatus = statusFilter === "all" || tracking.currentStatus === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await apiRequest("DELETE", `/api/admin/tracking/${id}`);
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Tracking number deleted successfully",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/tracking"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete tracking number",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleEdit = (trackingId: string) => {
+    setEditingTrackingId(trackingId);
+    setShowEditModal(true);
+  };
+
+  const handleDelete = (trackingId: string) => {
+    if (confirm("Are you sure you want to delete this tracking number? This action cannot be undone.")) {
+      deleteMutation.mutate(trackingId);
+    }
+  };
+
+  const handleView = (trackingNumber: string) => {
+    window.open(`/?track=${trackingNumber}`, '_blank');
+  };
 
   const statCards = [
     {
@@ -222,13 +267,32 @@ export default function AdminDashboard() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
-                        <Button variant="ghost" size="sm" className="text-brand-green hover:text-brand-dark-green">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-brand-green hover:text-brand-dark-green"
+                          onClick={() => handleEdit(tracking.id)}
+                          title="Edit tracking"
+                        >
                           <Edit size={16} />
                         </Button>
-                        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-900">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-blue-600 hover:text-blue-900"
+                          onClick={() => handleView(tracking.trackingNumber)}
+                          title="View tracking page"
+                        >
                           <Eye size={16} />
                         </Button>
-                        <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-900">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-red-600 hover:text-red-900"
+                          onClick={() => handleDelete(tracking.id)}
+                          disabled={deleteMutation.isPending}
+                          title="Delete tracking"
+                        >
                           <Trash2 size={16} />
                         </Button>
                       </div>
@@ -244,6 +308,12 @@ export default function AdminDashboard() {
       <CreateTrackingModal 
         open={showCreateModal}
         onOpenChange={setShowCreateModal}
+      />
+
+      <EditTrackingModal 
+        open={showEditModal}
+        onOpenChange={setShowEditModal}
+        trackingId={editingTrackingId}
       />
     </div>
   );
