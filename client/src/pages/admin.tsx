@@ -1,9 +1,42 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Truck, ArrowLeft } from "lucide-react";
+import { Truck, ArrowLeft, LogOut } from "lucide-react";
 import AdminDashboard from "@/components/admin-dashboard";
+import AdminLogin from "@/components/admin-login";
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    const authStatus = localStorage.getItem("admin_authenticated");
+    setIsAuthenticated(authStatus === "true");
+    setIsLoading(false);
+  }, []);
+
+  const handleLogin = (success: boolean) => {
+    setIsAuthenticated(success);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin_authenticated");
+    setIsAuthenticated(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-green"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={handleLogin} />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -21,6 +54,10 @@ export default function Admin() {
               <span className="text-sm text-gray-600 hidden md:block">
                 Need help? Call +1 786 358 5613
               </span>
+              <Button variant="outline" onClick={handleLogout}>
+                <LogOut className="mr-2" size={16} />
+                Logout
+              </Button>
               <Link href="/">
                 <Button variant="outline">
                   <ArrowLeft className="mr-2" size={16} />

@@ -12,6 +12,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/admin" component={Admin} />
+      <Route path="/admin-login" component={Admin} />
+      <Route path="/mowers-admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
   );

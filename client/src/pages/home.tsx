@@ -51,12 +51,6 @@ export default function Home() {
               <span className="text-sm text-gray-600 hidden md:block">
                 Need help? Call +1 786 358 5613
               </span>
-              <Link href="/admin">
-                <Button className="bg-brand-green hover:bg-brand-dark-green">
-                  <Shield className="mr-2" size={16} />
-                  Admin
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
