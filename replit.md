@@ -45,10 +45,12 @@ Preferred communication style: Simple, everyday language.
 - `GET /api/admin/stats` - Dashboard statistics
 - `POST /api/admin/tracking` - Create new tracking number
 - `POST /api/admin/tracking/:id/events` - Add tracking events
+- `GET /api/download-project` - Download complete template as ZIP file
 
 ### Frontend Pages
 - **Home**: Customer tracking interface with search and results, supports URL parameters (admin button removed)
 - **Admin**: Protected dashboard with login system and complete package management
+- **Download**: Template download page with project information and ZIP download functionality
 - **Components**: Comprehensive UI components including authentication, forms, tables, modals, and displays
 
 ### Admin Panel Features
@@ -58,6 +60,7 @@ Preferred communication style: Simple, everyday language.
 - **Delete Packages**: Remove tracking numbers with confirmation
 - **Search & Filter**: Find packages by tracking number or customer name
 - **Real-time Statistics**: Dashboard metrics for package counts and status
+- **Template Download**: Export complete project as ZIP file with documentation
 
 ### Authentication & Authorization
 - Simple localStorage-based authentication for admin panel

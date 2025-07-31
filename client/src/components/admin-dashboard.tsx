@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Search, Download, Settings, Edit, Eye, Trash2, Package, Truck, CheckCircle } from "lucide-react";
+import { Plus, Search, Download, Settings, Edit, Eye, Trash2, Package, Truck, CheckCircle, FileArchive } from "lucide-react";
 import { getStatusColor } from "@/lib/tracking";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
@@ -72,6 +72,11 @@ export default function AdminDashboard() {
     if (confirm("Are you sure you want to delete this tracking number? This action cannot be undone.")) {
       deleteMutation.mutate(trackingId);
     }
+  };
+
+  const handleDownloadTemplate = () => {
+    // Navigate to download page for better UX
+    window.location.href = '/download';
   };
 
   const handleView = (trackingNumber: string) => {
@@ -141,9 +146,12 @@ export default function AdminDashboard() {
           <Plus className="mr-2" size={16} />
           Create New Tracking
         </Button>
-        <Button variant="outline">
-          <Download className="mr-2" size={16} />
-          Export Data
+        <Button 
+          variant="outline"
+          onClick={handleDownloadTemplate}
+        >
+          <FileArchive className="mr-2" size={16} />
+          Download Template
         </Button>
         <Button variant="outline">
           <Settings className="mr-2" size={16} />
