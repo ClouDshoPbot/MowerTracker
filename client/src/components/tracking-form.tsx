@@ -19,18 +19,33 @@ export default function TrackingForm({ onTrack, isLoading }: TrackingFormProps) 
   };
 
   return (
-    <div className="relative bg-gradient-to-br from-brand-green via-brand-dark-green to-emerald-800 text-white py-20 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-xl"></div>
-        <div className="absolute top-32 right-20 w-24 h-24 bg-white rounded-full blur-lg"></div>
-        <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-white rounded-full blur-2xl"></div>
-        <div className="absolute bottom-10 right-1/3 w-20 h-20 bg-white rounded-full blur-md"></div>
+    <div className="relative bg-gradient-to-br from-brand-green via-brand-dark-green to-emerald-900 text-white py-24 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 opacity-8">
+        <div className="absolute top-16 left-16 w-40 h-40 bg-white rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-24 w-32 h-32 bg-white rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-24 left-1/4 w-48 h-48 bg-white rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-16 right-1/3 w-24 h-24 bg-white rounded-full blur-xl animate-pulse" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white rounded-full blur-3xl opacity-5 animate-pulse" style={{animationDelay: '1.5s'}}></div>
       </div>
       
-      {/* Grid Pattern */}
+      {/* Geometric Pattern */}
+      <div className="absolute inset-0 opacity-10" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Cpath d='M0 40a40 40 0 1 1 80 0 40 40 0 0 1-80 0zm40-32a32 32 0 1 0 0 64 32 32 0 0 0 0-64zm0 8a24 24 0 1 1 0 48 24 24 0 0 1 0-48zm0 8a16 16 0 1 0 0 32 16 16 0 0 0 0-32z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+      }}></div>
+      
+      {/* Truck/Package Icons Background */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 text-white text-4xl animate-pulse" style={{animationDelay: '3s'}}>📦</div>
+        <div className="absolute top-32 right-32 text-white text-3xl animate-pulse" style={{animationDelay: '1.5s'}}>🚚</div>
+        <div className="absolute bottom-28 left-32 text-white text-3xl animate-pulse" style={{animationDelay: '2.5s'}}>📦</div>
+        <div className="absolute bottom-20 right-20 text-white text-4xl animate-pulse" style={{animationDelay: '0.8s'}}>🚛</div>
+        <div className="absolute top-1/2 right-16 text-white text-2xl animate-pulse" style={{animationDelay: '4s'}}>📦</div>
+      </div>
+      
+      {/* Subtle Lines Pattern */}
       <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Cpath d='M0 50h100M50 0v100M25 0v100M75 0v100M0 25h100M0 75h100'/%3E%3C/g%3E%3C/svg%3E")`
       }}></div>
       
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
